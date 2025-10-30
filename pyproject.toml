@@ -1,0 +1,85 @@
+[project]
+name = "beast-ai-dev-agent"
+version = "0.1.0"
+description = "Platform-agnostic AI development agents for cloud platforms (GKE, Cloud Run, Cloud Functions)"
+authors = [
+    {name = "Lou Springer", email = "lou@nkllon.com"}
+]
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.10"
+keywords = ["ai", "agents", "cloud", "gke", "cloudrun", "beast-mode", "multi-agent"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+dependencies = [
+    "pydantic>=2.0.0",
+    "fastapi>=0.100.0",
+    "uvicorn[standard]>=0.23.0",
+    "python-json-logger>=2.0.0",
+]
+
+[project.optional-dependencies]
+beast-mode = [
+    "redis>=4.6.0",
+]
+langchain = [
+    "langchain>=0.1.0",
+    "langchain-core>=0.1.0",
+]
+monitoring = [
+    "prometheus-client>=0.17.0",
+    "opentelemetry-api>=1.20.0",
+]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-asyncio>=0.21.0",
+    "pytest-cov>=4.1.0",
+    "black>=23.0.0",
+    "flake8>=6.0.0",
+    "mypy>=1.0.0",
+    "types-redis>=4.6.0",
+]
+all = [
+    "beast-ai-dev-agent[beast-mode,langchain,monitoring]",
+]
+
+[project.urls]
+Homepage = "https://github.com/nkllon/beast-ai-dev-agent"
+Documentation = "https://github.com/nkllon/beast-ai-dev-agent#readme"
+Repository = "https://github.com/nkllon/beast-ai-dev-agent"
+Issues = "https://github.com/nkllon/beast-ai-dev-agent/issues"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/beast_ai_dev_agent"]
+
+[tool.black]
+line-length = 100
+target-version = ["py310", "py311", "py312"]
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --cov=beast_ai_dev_agent --cov-report=html --cov-report=term"
+
